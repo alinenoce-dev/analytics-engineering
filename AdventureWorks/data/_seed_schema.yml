@@ -1,0 +1,852 @@
+version: 2
+
+seeds:
+  # ---------------------------------------------------------------------------
+  # Sales Schema
+  # ---------------------------------------------------------------------------
+  - name: sales_country_region_currency
+    config:
+      quote_columns: false
+      column_types:
+        CountryRegionCode: string
+        CurrencyCode: string
+        ModifiedDate: timestamp
+
+  - name: sales_credit_card
+    config:
+      quote_columns: false
+      column_types:
+        CreditCardID: integer
+        CardType: string
+        CardNumber: string
+        ExpMonth: integer
+        ExpYear: integer
+        ModifiedDate: timestamp
+
+  - name: sales_currency
+    config:
+      quote_columns: false
+      column_types:
+        CurrencyCode: string
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: sales_currency_rate
+    config:
+      quote_columns: false
+      column_types:
+        CurrencyRateID: integer
+        CurrencyRateDate: timestamp
+        FromCurrencyCode: string
+        ToCurrencyCode: string
+        AverageRate: numeric
+        EndOfDayRate: numeric
+        ModifiedDate: timestamp
+
+  - name: sales_customer
+    config:
+      quote_columns: false
+      column_types:
+        CustomerID: integer
+        PersonID: integer
+        StoreID: integer
+        TerritoryID: integer
+        AccountNumber: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_person
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        TerritoryID: integer
+        SalesQuota: numeric
+        Bonus: numeric
+        CommissionPct: numeric
+        SalesYTD: numeric
+        SalesLastYear: numeric
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_person_quota_history
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        QuotaDate: timestamp
+        SalesQuota: numeric
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_reason
+    config:
+      quote_columns: false
+      column_types:
+        SalesReasonID: integer
+        Name: string
+        ReasonType: string
+        ModifiedDate: timestamp
+
+  - name: sales_order_detail
+    config:
+      quote_columns: false
+      column_types:
+        SalesOrderID: integer
+        SalesOrderDetailID: integer
+        CarrierTrackingNumber: string
+        OrderQty: integer
+        ProductID: integer
+        SpecialOfferID: integer
+        UnitPrice: numeric
+        UnitPriceDiscount: numeric
+        LineTotal: numeric
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_order_header
+    config:
+      quote_columns: false
+      column_types:
+        SalesOrderID: integer
+        RevisionNumber: integer
+        OrderDate: timestamp
+        DueDate: timestamp
+        ShipDate: timestamp
+        Status: integer
+        OnlineOrderFlag: boolean
+        SalesOrderNumber: string
+        PurchaseOrderNumber: string
+        AccountNumber: string
+        CustomerID: integer
+        SalesPersonID: integer
+        TerritoryID: integer
+        BillToAddressID: integer
+        ShipToAddressID: integer
+        ShipMethodID: integer
+        CreditCardID: integer
+        CreditCardApprovalCode: string
+        CurrencyRateID: integer
+        SubTotal: numeric
+        TaxAmt: numeric
+        Freight: numeric
+        TotalDue: numeric
+        Comment: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_order_header_sales_reason
+    config:
+      quote_columns: false
+      column_types:
+        SalesOrderID: integer
+        SalesReasonID: integer
+        ModifiedDate: timestamp
+
+  - name: sales_tax_rate
+    config:
+      quote_columns: false
+      column_types:
+        SalesTaxRateID: integer
+        StateProvinceID: integer
+        TaxType: integer
+        TaxRate: numeric
+        Name: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_territory
+    config:
+      quote_columns: false
+      column_types:
+        TerritoryID: integer
+        Name: string
+        CountryRegionCode: string
+        Group: string
+        SalesYTD: numeric
+        SalesLastYear: numeric
+        CostYTD: numeric
+        CostLastYear: numeric
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: sales_territory_history
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        TerritoryID: integer
+        StartDate: timestamp
+        EndDate: timestamp
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: shopping_cart_item
+    config:
+      quote_columns: false
+      column_types:
+        ShoppingCartItemID: integer
+        ShoppingCartID: string
+        Quantity: integer
+        ProductID: integer
+        DateCreated: timestamp
+        ModifiedDate: timestamp
+
+  - name: special_offer
+    config:
+      quote_columns: false
+      column_types:
+        SpecialOfferID: integer
+        Description: string
+        DiscountPct: numeric
+        Type: string
+        Category: string
+        StartDate: timestamp
+        EndDate: timestamp
+        MinQty: integer
+        MaxQty: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: special_offer_product
+    config:
+      quote_columns: false
+      column_types:
+        SpecialOfferID: integer
+        ProductID: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: store
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        Name: string
+        SalesPersonID: integer
+        Demographics: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  # ---------------------------------------------------------------------------
+  # HumanResources Schema
+  # ---------------------------------------------------------------------------
+  - name: hr_department
+    config:
+      quote_columns: false
+      column_types:
+        DepartmentID: integer
+        Name: string
+        GroupName: string
+        ModifiedDate: timestamp
+
+  - name: hr_employee
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        NationalIDNumber: string
+        LoginID: string
+        OrganizationNode: string
+        OrganizationLevel: integer
+        JobTitle: string
+        BirthDate: string
+        MaritalStatus: string
+        Gender: string
+        HireDate: string
+        SalariedFlag: boolean
+        VacationHours: integer
+        SickLeaveHours: integer
+        CurrentFlag: boolean
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: hr_employee_department_history
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        DepartmentID: integer
+        ShiftID: integer
+        StartDate: string
+        EndDate: string
+        ModifiedDate: timestamp
+
+  - name: hr_employee_pay_history
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        RateChangeDate: timestamp
+        Rate: numeric
+        PayFrequency: integer
+        ModifiedDate: timestamp
+
+  - name: hr_job_candidate
+    config:
+      quote_columns: false
+      column_types:
+        JobCandidateID: integer
+        BusinessEntityID: integer
+        Resume: string
+        ModifiedDate: timestamp
+
+  - name: hr_shift
+    config:
+      quote_columns: false
+      column_types:
+        ShiftID: integer
+        Name: string
+        StartTime: string
+        EndTime: string
+        ModifiedDate: timestamp
+
+  # ---------------------------------------------------------------------------
+  # Person Schema
+  # ---------------------------------------------------------------------------
+  - name: person_address
+    config:
+      quote_columns: false
+      column_types:
+        AddressID: integer
+        AddressLine1: string
+        AddressLine2: string
+        City: string
+        StateProvinceID: integer
+        PostalCode: string
+        SpatialLocation: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_address_type
+    config:
+      quote_columns: false
+      column_types:
+        AddressTypeID: integer
+        Name: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_business_entity
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_business_entity_address
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        AddressID: integer
+        AddressTypeID: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_business_entity_contact
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        PersonID: integer
+        ContactTypeID: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_contact_type
+    config:
+      quote_columns: false
+      column_types:
+        ContactTypeID: integer
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: person_country_region
+    config:
+      quote_columns: false
+      column_types:
+        CountryRegionCode: string
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: person_email_address
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        EmailAddressID: integer
+        EmailAddress: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_password
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        PasswordHash: string
+        PasswordSalt: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_person
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        PersonType: string
+        NameStyle: boolean
+        Title: string
+        FirstName: string
+        MiddleName: string
+        LastName: string
+        Suffix: string
+        EmailPromotion: integer
+        AdditionalContactInfo: string
+        Demographics: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: person_person_phone
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        PhoneNumber: string
+        PhoneNumberTypeID: integer
+        ModifiedDate: timestamp
+
+  - name: person_phone_number_type
+    config:
+      quote_columns: false
+      column_types:
+        PhoneNumberTypeID: integer
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: person_state_province
+    config:
+      quote_columns: false
+      column_types:
+        StateProvinceID: integer
+        StateProvinceCode: string
+        CountryRegionCode: string
+        IsOnlyStateProvinceFlag: boolean
+        Name: string
+        TerritoryID: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  # ---------------------------------------------------------------------------
+  # Production Schema
+  # ---------------------------------------------------------------------------
+  - name: production_bill_of_materials
+    config:
+      quote_columns: false
+      column_types:
+        BillOfMaterialsID: integer
+        ProductAssemblyID: integer
+        ComponentID: integer
+        StartDate: timestamp
+        EndDate: timestamp
+        UnitMeasureCode: string
+        BOMLevel: integer
+        PerAssemblyQty: numeric
+        ModifiedDate: timestamp
+
+  - name: production_culture
+    config:
+      quote_columns: false
+      column_types:
+        CultureID: string
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: production_document
+    config:
+      quote_columns: false
+      column_types:
+        DocumentNode: string
+        DocumentLevel: integer
+        Title: string
+        Owner: integer
+        FolderFlag: boolean
+        FileName: string
+        FileExtension: string
+        Revision: string
+        ChangeNumber: integer
+        Status: integer
+        DocumentSummary: string
+        Document: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_illustration
+    config:
+      quote_columns: false
+      column_types:
+        IllustrationID: integer
+        Diagram: string
+        ModifiedDate: timestamp
+
+  - name: production_location
+    config:
+      quote_columns: false
+      column_types:
+        LocationID: integer
+        Name: string
+        CostRate: numeric
+        Availability: numeric
+        ModifiedDate: timestamp
+
+  - name: production_product
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        Name: string
+        ProductNumber: string
+        MakeFlag: boolean
+        FinishedGoodsFlag: boolean
+        Color: string
+        SafetyStockLevel: integer
+        ReorderPoint: integer
+        StandardCost: numeric
+        ListPrice: numeric
+        Size: string
+        SizeUnitMeasureCode: string
+        WeightUnitMeasureCode: string
+        Weight: numeric
+        DaysToManufacture: integer
+        ProductLine: string
+        Class: string
+        Style: string
+        ProductSubcategoryID: integer
+        ProductModelID: integer
+        SellStartDate: timestamp
+        SellEndDate: timestamp
+        DiscontinuedDate: timestamp
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_product_category
+    config:
+      quote_columns: false
+      column_types:
+        ProductCategoryID: integer
+        Name: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_product_cost_history
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        StartDate: timestamp
+        EndDate: timestamp
+        StandardCost: numeric
+        ModifiedDate: timestamp
+
+  - name: production_product_description
+    config:
+      quote_columns: false
+      column_types:
+        ProductDescriptionID: integer
+        Description: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_product_document
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        DocumentNode: string
+        ModifiedDate: timestamp
+
+  - name: production_product_inventory
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        LocationID: integer
+        Shelf: string
+        Bin: integer
+        Quantity: integer
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_product_list_price_history
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        StartDate: timestamp
+        EndDate: timestamp
+        ListPrice: numeric
+        ModifiedDate: timestamp
+
+  - name: production_product_model
+    config:
+      quote_columns: false
+      column_types:
+        ProductModelID: integer
+        Name: string
+        CatalogDescription: string
+        Instructions: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_product_model_illustration
+    config:
+      quote_columns: false
+      column_types:
+        ProductModelID: integer
+        IllustrationID: integer
+        ModifiedDate: timestamp
+
+  - name: production_product_model_product_description_culture
+    config:
+      quote_columns: false
+      column_types:
+        ProductModelID: integer
+        ProductDescriptionID: integer
+        CultureID: string
+        ModifiedDate: timestamp
+
+  - name: production_product_photo
+    config:
+      quote_columns: false
+      column_types:
+        ProductPhotoID: integer
+        ThumbNailPhoto: string
+        ThumbnailPhotoFileName: string
+        LargePhoto: string
+        LargePhotoFileName: string
+        ModifiedDate: timestamp
+
+  - name: production_product_product_photo
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        ProductPhotoID: integer
+        Primary: boolean
+        ModifiedDate: timestamp
+
+  - name: production_product_review
+    config:
+      quote_columns: false
+      column_types:
+        ProductReviewID: integer
+        ProductID: integer
+        ReviewerName: string
+        ReviewDate: timestamp
+        EmailAddress: string
+        Rating: integer
+        Comments: string
+        ModifiedDate: timestamp
+
+  - name: production_product_subcategory
+    config:
+      quote_columns: false
+      column_types:
+        ProductSubcategoryID: integer
+        ProductCategoryID: integer
+        Name: string
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: production_scrapreason
+    config:
+      quote_columns: false
+      column_types:
+        ScrapReasonID: integer
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: production_transaction_history
+    config:
+      quote_columns: false
+      column_types:
+        TransactionID: integer
+        ProductID: integer
+        ReferenceOrderID: integer
+        ReferenceOrderLineID: integer
+        TransactionDate: timestamp
+        TransactionType: string
+        Quantity: integer
+        ActualCost: numeric
+        ModifiedDate: timestamp
+
+  - name: production_transaction_history_archive
+    config:
+      quote_columns: false
+      column_types:
+        TransactionID: integer
+        ProductID: integer
+        ReferenceOrderID: integer
+        ReferenceOrderLineID: integer
+        TransactionDate: timestamp
+        TransactionType: string
+        Quantity: integer
+        ActualCost: numeric
+        ModifiedDate: timestamp
+
+  - name: production_unit_measure
+    config:
+      quote_columns: false
+      column_types:
+        UnitMeasureCode: string
+        Name: string
+        ModifiedDate: timestamp
+
+  - name: production_work_order
+    config:
+      quote_columns: false
+      column_types:
+        WorkOrderID: integer
+        ProductID: integer
+        OrderQty: integer
+        StockedQty: integer
+        ScrappedQty: integer
+        StartDate: timestamp
+        EndDate: timestamp
+        DueDate: timestamp
+        ScrapReasonID: integer
+        ModifiedDate: timestamp
+
+  - name: production_work_order_routing
+    config:
+      quote_columns: false
+      column_types:
+        WorkOrderID: integer
+        ProductID: integer
+        OperationSequence: integer
+        LocationID: integer
+        ScheduledStartDate: timestamp
+        ScheduledEndDate: timestamp
+        ActualStartDate: timestamp
+        ActualEndDate: timestamp
+        ActualResourceHours: numeric
+        PlannedCost: numeric
+        ActualCost: numeric
+        ModifiedDate: timestamp
+
+  # ---------------------------------------------------------------------------
+  # Purchasing Schema
+  # ---------------------------------------------------------------------------
+  - name: purchasing_product_vendor
+    config:
+      quote_columns: false
+      column_types:
+        ProductID: integer
+        BusinessEntityID: integer
+        AverageLeadTime: integer
+        StandardPrice: numeric
+        LastReceiptCost: numeric
+        LastReceiptDate: timestamp
+        MinOrderQty: integer
+        MaxOrderQty: integer
+        OnOrderQty: integer
+        UnitMeasureCode: string
+        ModifiedDate: timestamp
+
+  - name: purchasing_purchase_order_detail
+    config:
+      quote_columns: false
+      column_types:
+        PurchaseOrderID: integer
+        PurchaseOrderDetailID: integer
+        DueDate: timestamp
+        OrderQty: integer
+        ProductID: integer
+        UnitPrice: numeric
+        LineTotal: numeric
+        ReceivedQty: numeric
+        RejectedQty: numeric
+        StockedQty: numeric
+        ModifiedDate: timestamp
+
+  - name: purchasing_purchase_order_header
+    config:
+      quote_columns: false
+      column_types:
+        PurchaseOrderID: integer
+        RevisionNumber: integer
+        Status: integer
+        EmployeeID: integer
+        VendorID: integer
+        ShipMethodID: integer
+        OrderDate: timestamp
+        ShipDate: timestamp
+        SubTotal: numeric
+        TaxAmt: numeric
+        Freight: numeric
+        TotalDue: numeric
+        ModifiedDate: timestamp
+
+  - name: purchasing_ship_method
+    config:
+      quote_columns: false
+      column_types:
+        ShipMethodID: integer
+        Name: string
+        ShipBase: numeric
+        ShipRate: numeric
+        rowguid: string
+        ModifiedDate: timestamp
+
+  - name: purchasing_vendor
+    config:
+      quote_columns: false
+      column_types:
+        BusinessEntityID: integer
+        AccountNumber: string
+        Name: string
+        CreditRating: integer
+        PreferredVendorStatus: boolean
+        ActiveFlag: boolean
+        PurchasingWebServiceURL: string
+        ModifiedDate: timestamp
+
+  # ---------------------------------------------------------------------------
+  # dbo Schema
+  # ---------------------------------------------------------------------------
+  - name: dbo_aw_build_version
+    config:
+      quote_columns: false
+      column_types:
+        DBVersion: string
+        VersionDate: timestamp
+        ModifiedDate: timestamp
+
+  - name: dbo_database_log
+    config:
+      quote_columns: false
+      column_types:
+        DatabaseLogID: integer
+        PostTime: timestamp
+        DatabaseUser: string
+        Event: string
+        Schema: string
+        Object: string
+        TSQL: string
+        XmlEvent: string
+
+  - name: dbo_error_log
+    config:
+      quote_columns: false
+      column_types:
+        ErrorLogID: integer
+        ErrorTime: timestamp
+        UserName: string
+        ErrorNumber: integer
+        ErrorSeverity: integer
+        ErrorState: integer
+        ErrorProcedure: string
+        ErrorLine: integer
+        ErrorMessage: string

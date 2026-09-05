@@ -108,6 +108,15 @@ sources:
               - unique
               - not_null
 
+      - name: productmodel
+        description: "Product macro models."
+        columns:
+          - name: ProductModelID
+            description: "Natural primary key (BK) of the product model."
+            tests:
+              - unique
+              - not_null
+
   - name: person
     database: adventureworks
     schema: person

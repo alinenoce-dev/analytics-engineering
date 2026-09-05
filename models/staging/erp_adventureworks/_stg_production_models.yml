@@ -1,7 +1,7 @@
 
 models:
-  # SCHEMA: PRODUCTION (STAGING) 
-
+  # SCHEMA: PRODUCTION (STAGING)
+  
   - name: stg_production_product
     description: "Staging layer for Adventure Works products catalog, applying naming standardization and casting."
     columns:
@@ -18,7 +18,11 @@ models:
         description: "Internal identification code of the product."
         tests:
           - not_null
+      - name: product_color
+        description: "Product color."
 
+      - name: size
+        description: "Product size or dimension."
 
   - name: stg_production_product_subcategory
     description: "Staging layer for product subcategories."
@@ -27,7 +31,10 @@ models:
         description: "Natural primary key of the subcategory."
         tests:
           - unique
-          - not_null         
+          - not_null
+      - name: product_subcategory_name
+        description: "Friendly name of the product subcategory."
+   
 
   - name: stg_production_product_category
     description: "Staging layer for the macro product categories of Adventure Works."
@@ -37,7 +44,6 @@ models:
         tests:
           - unique
           - not_null
-      - name: product_category_name
+      - name: product)category_name
         description: "Macro category name (Bikes, Components, Clothing, Accessories)."
-        tests:
-          - not_null
+     

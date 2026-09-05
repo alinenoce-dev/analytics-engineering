@@ -1,6 +1,6 @@
 with
     
-    fonte_products as (
+    source_products as (
         select * 
         from {{ source("production", "product") }}
     ),
@@ -33,7 +33,7 @@ with
             , cast(FinishedGoodsFlag as boolean) as product_is_finished_good
             
             
-        from fonte_products
+        from source_products
     )
 
 select *

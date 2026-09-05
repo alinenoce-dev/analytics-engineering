@@ -1,0 +1,186 @@
+
+
+models:
+
+  - name: int_customer
+    description: >
+      Master customer consolidation model for AdventureWorks.
+      Unifies individual retail customer flows (B2C - via stg_person_person) and corporate store partners
+      (B2B - via stg_sales_store), applying conditional logic to define commercial segments and cleaned customer names.
+    columns:
+      - name: pk_customer
+        description: "Natural primary key (Business Key) that uniquely identifies a customer in the CRM/ERP."
+        tests:
+          - unique
+          - not_null
+
+      - name: fk_person
+        description: "Relationship ID pointing to individual physical customer details (null for strictly corporate store accounts)."
+
+      - name: fk_store
+        description: "Relationship ID pointing to corporate store/reseller details (null for physical B2C retail customers)."
+
+      - name: fk_territory
+        description: "Sales territory identifier code linked to this customer."
+
+      - name: customer_account_number
+        description: "Unique commercial or banking account number for the customer."
+        tests:
+          - not_null
+
+      - name: customer_type
+        description: "Segment classification of the customer: 'B2B' (Corporate/Store) or 'B2C' (Individual)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['B2B', 'B2C', 'Not Informed']
+
+      - name: customer_name
+        description: >
+          Unified name of the customer. If B2C, concatenates First Name + Middle Name + Last Name cleanly.
+          If B2B, retrieves the store's commercial name (store_name). Fallback to 'Not Informed'.
+        tests:
+          - not_null
+
+  - name: int_location
+    description: >
+      Denormalized location model consolidating all geographic intelligence.
+      Joins physical addresses, states/provinces, and country data to output a single performant geomorphic structure
+      and generate a master geographic Surrogate Key.
+    columns:
+      - name: sk_location
+        description: "Surrogate Key (artificial primary key) generated via MD5 hash of address_id."
+        tests:
+          - unique
+          - not_null
+
+      - name: pk_address
+        description: "Natural primary key (Business Key) of the source physical address."
+        tests:
+          - unique
+          - not_null
+
+      - name: fk_address_state_province
+        description: "Foreign key linking to the corresponding state or province."
+        tests:
+          - not_null
+
+      - name: fk_country_region_code
+        description: "Official ISO code identifying the country."
+        tests:
+          - not_null
+
+      - name: address_line1
+        description: "First line of the street/physical address."
+        tests:
+          - not_null
+
+      - name: address_line2
+        description: "Second line of address/complement (COALESCE applied to return 'Not Applicable' if null)."
+
+      - name: address_city
+        description: "Name of the city where the physical address is located."
+        tests:
+          - not_null
+
+      - name: pk_state_provinc
+        description: "Official postal abbreviation of the state or province (e.g., WA, CA, SP)."
+
+      - name: state_province_name
+        description: "Full name of the corresponding state or province."
+        tests:
+          - not_null
+
+      - name: country_name
+        description: "Full name of the corresponding global country or region."
+        tests:
+          - not_null
+
+      - name: address_postal_code
+        description: "Postal code or ZIP code associated with the physical address."
+        tests:
+          - not_null
+
+      - name: fk_territory
+        description: "Identifier of the sales territory servicing this geographic location."
+
+  - name: int_product
+    description: 
+      Master product intermediate model consolidating the physical hierarchy.
+      This flattens product, subcategory, and macro category data (disregarding the conceptual product models table),
+      generating a highly performant Surrogate Key for rapid downstream fact table joins.
+    columns:
+      - name: sk_product
+        description: "Surrogate Key (artificial primary key in the DW) generated via MD5 hash of pk_product."
+        tests:
+          - unique
+          - not_null
+
+      - name: pk_product
+        description: "Natural primary key (Business Key) uniquely identifying the product."
+        tests:
+          - unique
+          - not_null
+
+      - name: fk_product_subcategory
+        description: "Relationship key pointing to the product subcategory table."
+
+      - name: fk_product_category
+        description: "Relationship key pointing to the macro product category table."
+
+      - name: product_number
+        description: "Unique internal product part number."
+
+      - name: product_name
+        description: "Commercial name of the product."
+
+      - name: product_color
+        description: "Color of the product (COALESCE fallback applied to return 'Not Informed' if null)."
+    
+      - name: product_size
+        description: "Physical size measurement of the product (COALESCE fallback applied to return 'Not Applicable' if null)."
+
+      - name: product_standard_cost
+        description: "Standard cost of manufacturing or acquiring this product."
+
+      - name: product_list_price
+        description: "Official list price suggested for retail market sales."
+
+      - name: subcategory_name
+        description: "Full name of the product's subcategory (e.g., Mountain Bikes, Road Frames)."
+
+      - name: category_name
+        description: "Full name of the product's macro category (e.g., Bikes, Components, Accessories, Clothing)."
+
+      - name: product_line
+        description: "Market segment classification for the product line."
+
+      - name: product_class
+        description: "Technical quality class level assigned (e.g., H = High, M = Medium, L = Low)."
+
+      - name: product_style
+        description: "Design style of the product (W = Womens, M = Mens, U = Universal)."
+
+
+  - name: int_sales_reasons_bridge
+    description: >
+      Intermediate Many-to-Many Bridge Table model.
+      Provides the crucial analytical mapping to link AdventureWorks sales orders to their multiple sales reasons (N:M relationship)
+      without triggering double-counting (fan-out) of revenue metrics in aggregated dashboard reports.
+    columns:
+      - name: sk_sales_reason_bridge
+        description: "Surrogate Key composed to uniquely audit and validate each individual bridge mapping occurrence."
+        tests:
+          - unique
+          - not_null
+
+      - name: pk_sales_order
+        description: "Natural Business Key (BK) of the sales order header that initiated the transaction."
+        tests:
+          - not_null
+
+      - name: sk_sales_reason
+        description: "Surrogate Key mapping directly to the master sales reasons dimension (dim_sales_reasons)."
+        tests:
+          - unique
+          - not_null

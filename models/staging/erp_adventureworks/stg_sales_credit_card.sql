@@ -12,7 +12,7 @@ with
             , cast(cardnumber as string) as credit_card_number
             , cast(expmonth as int) as credit_card_expiration_month
             , cast(expyear as int) as credit_card_expiration_year
-            , cast(modifieddate as timestamp) as Credit_card_modified_date
+            , cast(modifieddate as timestamp) as credit_card_modified_date
             
         from source_creditcard
     )

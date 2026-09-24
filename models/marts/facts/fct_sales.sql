@@ -86,7 +86,6 @@ with
             , order_header.fk_salesperson
             , order_header.fk_territory
             , order_detail.fk_special_offer_id
-            , order_detail.carrier_tracking_number
 
             , order_detail.sales_order_quantity
             , order_detail.sales_unit_price
